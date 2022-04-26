@@ -6,7 +6,7 @@ import Cell from 'components/Cell'
 function App() {
     const [matrix, setMatrix] = useState([])
     const [itemDrag, setItemDrag] = useState()
-    const [nount, setNount] = useState(null)
+    const [nount, setNount] = useState('')
 
     const genMatrix = () => {
         const arrMatrix = []
@@ -68,22 +68,13 @@ function App() {
                     value={nount}
                     onKeyDown={handleTextInput}
                     onChange={ev => setNount(ev.target.value)}
+                    data-testid="input"
                 />
             </div>
             {matrix.map((row, rowIndex) => {
                 return (
                     <div style={{ display: 'flex' }} key={rowIndex}>
                         {row.map((number, colIndex) => {
-                            // return <div
-                            //   key={colIndex}
-                            //   className='number-item'
-                            //   draggable
-                            //   onDragStart={ev => drag(ev, [rowIndex, colIndex])}
-                            //   onDragOver={allowDrop}
-                            //   onDrop={ev => drop(ev, [rowIndex, colIndex])}
-                            // >
-                            //   {number}
-                            // </div>
                             return (
                                 <Cell
                                     key={`${rowIndex}${colIndex}`}

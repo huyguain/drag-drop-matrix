@@ -18,6 +18,7 @@ export default function Cell({
             onDragStart={ev => drag(ev, [rowIndex, colIndex])}
             onDragOver={allowDrop}
             onDrop={ev => drop(ev, [rowIndex, colIndex])}
+            data-testid="cell-matrix"
         >
             {number}
         </div>
