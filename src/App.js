@@ -10,10 +10,12 @@ function App() {
 
     const genMatrix = () => {
         const arrMatrix = []
-        let count = 1
+        // generate matrix empty
         for (let i = 0; i < nount; i++) {
             arrMatrix[i] = []
         }
+        // Even columns are filled in ascending order
+        // Odd columns are filled in descending order
         for (let j = 0; j < nount; j++) {
             if (j % 2 === 0) {
                 for (let i = 0; i < nount; i++) {
@@ -30,6 +32,7 @@ function App() {
         setMatrix(arrMatrix)
     }
 
+    // When drag a item, save save that address item
     const drag = useCallback((ev, index) => {
         ev.dataTransfer.effectAllowed = 'move'
         setItemDrag(index)
@@ -39,6 +42,7 @@ function App() {
         ev.preventDefault()
     }, [])
 
+    // When drop into a item, swap value two item
     const drop = useCallback(
         (ev, index) => {
             ev.preventDefault()
