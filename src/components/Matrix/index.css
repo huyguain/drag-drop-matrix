@@ -1,6 +1,4 @@
-.number-item {
-    width: 50px;
-    height: 50px;
+.cell-item {
     display: flex;
     justify-content: center;
     align-items: center;
