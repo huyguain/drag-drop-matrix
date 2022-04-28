@@ -10,26 +10,24 @@ component, lifecyle like the old react versions. Here are some descriptions for 
 ```
     const genMatrix = () => {
         const arrMatrix = []
-        // generate matrix empty
-        for (let i = 0; i < nount; i++) {
-            arrMatrix[i] = []
+        let count = 1
+        for (let row = 0; row < nount; row++) {
+            arrMatrix[row] = []
         }
-        // Even columns are filled in ascending order
-        // Odd columns are filled in descending order
-        for (let j = 0; j < nount; j++) {
-            if (j % 2 === 0) {
-                for (let i = 0; i < nount; i++) {
-                    arrMatrix[i][j] = count
+        for (let col = 0; col < nount; col++) {
+            if (col % 2 === 0) {
+                for (let row = 0; row < nount; row++) {
+                    arrMatrix[row][col] = count
                     count++
                 }
             } else {
-                for (let i = nount - 1; i > -1; i--) {
-                    arrMatrix[i][j] = count
+                for (let row = nount - 1; row > -1; row--) {
+                    arrMatrix[row][col] = count
                     count++
                 }
             }
         }
-        setMatrix(arrMatrix)
+        dispatch(setMatrix(arrMatrix))
     }
 ```
 
@@ -37,20 +35,33 @@ component, lifecyle like the old react versions. Here are some descriptions for 
 - I traverse the array zig zag, even columns are filled in ascending order, odd is the opposite.
 - Set that result into matrix state.
 
+### Virtualized (use react-window)
+
+- When Nount too large, react window works by only rendering part of a large matrix.  This helps address some common performance bottlenecks:
+    It reduces the amount of work (and time) required to render the initial view and to process updates.
+    It reduces the memory footprint by avoiding over-allocation of DOM nodes.
+
 ### Swap two item when drag drop
 ```
     // When drop into a item, swap value two item
     const drop = useCallback(
-        (ev, index) => {
+        ev => {
             ev.preventDefault()
-            if (!itemDrag) return
-            [matrix[index[0]][index[1]], matrix[itemDrag[0]][itemDrag[1]]] = [
-                matrix[itemDrag[0]][itemDrag[1]],
-                matrix[index[0]][index[1]],
+            const [dragIndex, dropIndex] = [
+                ev.dataTransfer.getData('text').split(','),
+                ev.target.id.split(','),
             ]
-            setMatrix([...matrix])
+            if (!dragIndex) return
+            ;[
+                matrix[dropIndex[0]][dropIndex[1]],
+                matrix[dragIndex[0]][dragIndex[1]],
+            ] = [
+                matrix[dragIndex[0]][dragIndex[1]],
+                matrix[dropIndex[0]][dropIndex[1]],
+            ]
+            dispatch(setMatrix([...matrix]))
         },
-        [itemDrag, matrix],
+        [matrix],
     )
 ```
 - When drop into a other item, swap value two that item. Set new value into matrix state.
@@ -108,4 +119,4 @@ test('it generate matrix', () => {
 
 ##Some additional libraries
 
-- eslint, husky, lint-staged, prettier
+- eslint, husky, lint-staged, prettier, sass, tailwind, antd design
