@@ -2,8 +2,10 @@ import React from 'react'
 import { useContext } from 'react'
 import { MatrixContext } from 'store/context'
 import { setNount, setMatrix } from 'store/action'
+import { InputNumber } from 'antd'
+import './index.scss'
 
-export default function InputNumber() {
+export default function InputNount() {
     const { nount, dispatch } = useContext(MatrixContext)
 
     const genMatrix = () => {
@@ -36,14 +38,16 @@ export default function InputNumber() {
 
     return (
         <>
-            <h1>Zigzag pattern number table</h1>
+            <h1 className="text-3xl font-semibold text-blue-600">
+                Zigzag pattern number table
+            </h1>
             <div className="input-text">
-                Nhập N (rôi nhấn Enter):{' '}
-                <input
-                    type="number"
-                    value={nount}
+                <span className="text-slate-600">Enter N: </span>
+                <InputNumber
+                    min={1}
+                    defaultValue={nount}
                     onKeyDown={handleTextInput}
-                    onChange={ev => dispatch(setNount(ev.target.value))}
+                    onChange={value => dispatch(setNount(value))}
                     data-testid="input"
                 />
             </div>

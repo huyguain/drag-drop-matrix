@@ -3,7 +3,7 @@ import { useContext, useCallback } from 'react'
 import { MatrixContext } from 'store/context'
 import { FixedSizeGrid as Grid } from 'react-window'
 import { setMatrix } from 'store/action'
-import './index.css'
+import './index.scss'
 
 export default function Matrix() {
     const { matrix, dispatch } = useContext(MatrixContext)
@@ -40,7 +40,7 @@ export default function Matrix() {
     // eslint-disable-next-line react/prop-types
     const CellTest = ({ columnIndex, rowIndex, style }) => (
         <div
-            className="cell-item"
+            className="flex justify-center items-center cell-item"
             data-testid="cell-matrix"
             id={[rowIndex, columnIndex]}
             style={style}
@@ -55,14 +55,14 @@ export default function Matrix() {
 
     return (
         <>
-            {matrix.length && (
+            {!!matrix.length && (
                 <Grid
                     columnCount={matrix.length}
-                    columnWidth={50}
-                    height={400}
+                    columnWidth={60}
+                    height={450}
                     rowCount={matrix.length}
-                    rowHeight={50}
-                    width={400}
+                    rowHeight={60}
+                    width={450}
                 >
                     {CellTest}
                 </Grid>
